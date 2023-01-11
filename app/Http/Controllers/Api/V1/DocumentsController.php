@@ -10,6 +10,7 @@ use App\Http\Resources\V1\DocumentsResource;
 use App\Http\Resources\V1\DocumentsCollection;
 use App\Models\Documents;
 use App\Filters\V1\DocumentsFilter;
+use Illuminate\Support\Facades\Response;
 
 class DocumentsController extends Controller
 {
@@ -74,6 +75,10 @@ class DocumentsController extends Controller
      */
     public function destroy(Documents $document)
     {
-        $document->delete();
+        if ($document->delete()) {
+            return Response::json([
+                'message' => 'El usuario eliminado correctamente.'
+            ]);
+        }
     }
 }

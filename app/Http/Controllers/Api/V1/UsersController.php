@@ -10,6 +10,7 @@ use App\Models\Users;
 use App\Filters\V1\UsersFilter;
 use App\Http\Requests\V1\StoreUsersRequest;
 use App\Http\Requests\V1\UpdateUsersRequest;
+use Illuminate\Support\Facades\Response;
 
 class UsersController extends Controller
 {
@@ -85,6 +86,11 @@ class UsersController extends Controller
      */
     public function destroy(Users $user)
     {
-        $user->delete();
+        if ($user->delete()) {
+            return Response::json([
+                'message' => 'El usuario eliminado correctamente.'
+            ]);
+            
+        }
     }
 }
